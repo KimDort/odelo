@@ -1,28 +1,33 @@
 package com.ican.com.bean;
 
-import java.util.Map;
+import java.util.List;
 
-public class BaseBean {
-	private String message;
-	private Map<String, Object> map;
-	private char isProcess;
-	public Map<String, Object> getMap() {
-		return map;
+public class BaseBean{
+	
+	private List<Object> direction;
+	private List<OthelloBean> othelloList;
+	private char turn;
+	
+	public BaseBean(){}
+	
+	public char getTurn() {
+		return turn;
 	}
-	public void setMap(Map<String, Object> map) {
-		this.map = map;
+	public void setTurn(char turn) {
+		this.turn = turn;
 	}
-	public String getMessage() {
-		return message;
+
+	public List<Object> getDirection() {
+		return direction;
 	}
-	public void setMessage(String message) {
-		this.message = message;
+	public void setDirection(List<Object> direction) {
+		this.direction = direction;
 	}
-	public char getIsProcess() {
-		return isProcess;
+	public List<OthelloBean> getOthelloList() {
+		return othelloList;
 	}
-	public void setIsProcess(char isProcess) {
-		this.isProcess = isProcess;
+	public void setOthelloList(List<OthelloBean> othelloList) {
+		this.othelloList = othelloList;
 	}
 	
 }

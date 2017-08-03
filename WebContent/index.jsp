@@ -1,4 +1,4 @@
-<%@page import="com.ican.com.bean.OdeloBean"%>
+<%@page import="com.ican.com.bean.OthelloBean"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -6,7 +6,7 @@
 <%
 	int[][] panel = new int[10][10];
 	List<?> getBeanInfo = (List<?>) request.getSession().getAttribute("bean");
-	List<OdeloBean> beanList = (List<OdeloBean>) getBeanInfo;
+	List<OthelloBean> beanList = (List<OthelloBean>) getBeanInfo;
 %>
 <!DOCTYPE html>
 <html>
