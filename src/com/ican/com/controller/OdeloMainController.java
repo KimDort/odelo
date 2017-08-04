@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ican.com.bean.BaseBean;
-import com.ican.com.bean.OthelloBean;
-import com.ican.com.service.CheckerDirectionNextStone;
+import com.ican.com.bean.StoneBean;
+import com.ican.com.service.DirectionService;
 
 
 public class OdeloMainController extends HttpServlet{
@@ -28,21 +28,6 @@ public class OdeloMainController extends HttpServlet{
 	 * isLastStoneX, isLastStoneY, lastStoneColor, 8방향 변수? 클래스?
 	 */
 	private static final long serialVersionUID = -427753035517767195L;
-	private List<OthelloBean> beanList;
-	
-	public OdeloMainController(){
-		//현재 돌 정보를 저장할 리스트
-		beanList=new ArrayList<>();
-		//생성자를 통한 기본 1번 돌 생성 좌표 x, y, 돌색깔
-		beanList.add(init(5, 5, 'B'));
-		//생성자를 통한 기본 2번 돌 생성 좌표 x, y, 돌색깔
-		beanList.add(init(5, 6, 'W'));
-		//생성자를 통한 기본 3번 돌 생성 좌표 x, y, 돌색깔
-		beanList.add(init(6, 5, 'W'));
-		//생성자를 통한 기본 3번 돌 생성 좌표 x, y, 돌색깔
-		beanList.add(init(6, 6, 'B'));
-	}
-	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doProcess(req, resp);
@@ -53,29 +38,31 @@ public class OdeloMainController extends HttpServlet{
 		doProcess(req, resp);
 	}
 	
-	
 	public void doProcess(HttpServletRequest req, HttpServletResponse resp){
+		BaseBean base = new BaseBean();
+		char[][] field = setField(base);
+		StoneBean inputStone= new StoneBean();
+		String getX="";
+		String getY="";
+		int positionX=0;
+		int positionY=0;
 		try{
 			System.out.println("서블릿 진입");
 			if(req.getParameter("x")!=null || req.getParameter("y")!=null){
-				OthelloBean bean = new OthelloBean();
-				CheckerDirectionNextStone  nextStone = new CheckerDirectionNextStone();
-				
-				String getX=req.getParameter("x");
-				String getY=req.getParameter("y");
-				int positionX=Integer.parseInt(getX);
-				int positionY=Integer.parseInt(getY);
-				
-				
-				bean.setPositionX(positionX);
-				bean.setPositionY(positionY);
-				bean.setStoneColor('B');
-				System.out.println("입력 된 x 좌표 : "+positionX+", 입력된 y 좌표 : "+positionY);
-				nextStone.northWestNextStone(bean, beanList);
-				beanList.add(bean);
+				getX=req.getParameter("x");
+				getY=req.getParameter("y");
+				positionX=Integer.parseInt(getX);
+				positionY=Integer.parseInt(getY);
+				inputStone.setPositionX(positionX);
+				inputStone.setPositionY(positionY);
+				inputStone.setStoneColor('B');
+				field[positionY][positionX]=inputStone.getStoneColor();
+				base.setField(field);
+				DirectionService service = new DirectionService();
+				service.getLastStone(inputStone, base);
 			}
 			//최종 저장된 정보 값을 리스트에 담고 세션에 담아 포워드 시킴
-			req.getSession().setAttribute("bean", beanList);
+			req.getSession().setAttribute("field", field);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
 			dispatcher.forward(req, resp);
 		} catch (Exception e) {
@@ -83,9 +70,12 @@ public class OdeloMainController extends HttpServlet{
 		}
 	}
 	
-	public OthelloBean init(int positionX, int positionY, char stoneColor){
-		OthelloBean bean = new OthelloBean(positionX, positionY, stoneColor);
-		
-		return bean;
+	public char[][] setField(BaseBean base){
+		char[][] field = new char[base.getWidth()][base.getHeight()];
+		field[4][4]='B';
+		field[4][5]='W';
+		field[5][4]='W';
+		field[5][5]='W';
+		return field;
 	}
 }

@@ -1,33 +1,57 @@
 package com.ican.com.bean;
 
 import java.util.List;
+import java.util.Map;
 
-public class BaseBean{
+public class BaseBean {
+	private int width=10;
+	private int height=10;
+	private char trun='B';
+	private Map<String, DirectionBean> directionMap;
+	private List<Map<String, DirectionBean>> directionList;
+	private List<StoneBean> stoneList;
+	private char[][] field;
 	
-	private List<Object> direction;
-	private List<OthelloBean> othelloList;
-	private char turn;
-	
-	public BaseBean(){}
-	
-	public char getTurn() {
-		return turn;
+	public List<StoneBean> getStoneList() {
+		return stoneList;
 	}
-	public void setTurn(char turn) {
-		this.turn = turn;
+	public void setStoneList(List<StoneBean> stoneList) {
+		this.stoneList = stoneList;
 	}
-
-	public List<Object> getDirection() {
-		return direction;
+	public Map<String, DirectionBean> getDirectionMap() {
+		return directionMap;
 	}
-	public void setDirection(List<Object> direction) {
-		this.direction = direction;
+	public void setDirectionMap(Map<String, DirectionBean> directionMap) {
+		this.directionMap = directionMap;
 	}
-	public List<OthelloBean> getOthelloList() {
-		return othelloList;
+	public List<Map<String, DirectionBean>> getDirectionList() {
+		return directionList;
 	}
-	public void setOthelloList(List<OthelloBean> othelloList) {
-		this.othelloList = othelloList;
+	public void setDirectionList(List<Map<String, DirectionBean>> directionList) {
+		this.directionList = directionList;
 	}
-	
+	public char[][] getField() {
+		return field;
+	}
+	public void setField(char[][] field) {
+		this.field = field;
+	}
+	public char getTrun() {
+		return trun;
+	}
+	public void setTrun(char trun) {
+		this.trun = trun;
+	}
+	public int getWidth() {
+		return width;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
+	public int getHeight() {
+		return height;
+	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
 }
